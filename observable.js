@@ -63,16 +63,16 @@ class Observable {
       * Add a listener for our object.
       *
       * @param {String} prop The property name.
-      * @param {Function} listener The listener called every time [prop] changes.
+      * @param {Function} handler The handler called every time [prop] changes.
       *
       * @return {String} The ID of the listener added.
       */
-    addListener = (prop, listener = (prop, from, to) => null) => {
+    addListener = (prop, handler = (prop, from, to) => null) => {
         if (this.listeners[prop]) {
-            this.listeners[prop][this.index] = listener;
+            this.listeners[prop][this.index] = handler;
         } else {
             this.listeners[prop] = {
-                [this.index]: listener,
+                [this.index]: handler,
             }
         }
 
@@ -93,10 +93,10 @@ class Observable {
      * @return {void}
      */
     notify = (prop, from, to) => {
-        const listeners = this.listeners[prop] && Object.values(this.listeners[prop]);
+        const handlers = this.listeners[prop] && Object.values(this.listeners[prop]);
 
-        if (Array.isArray(listeners) && listeners.length > 0) {
-            listeners.forEach(listener => listener(prop, from, to));
+        if (Array.isArray(handlers) && handlers.length > 0) {
+            handlers.forEach(handler => handler(prop, from, to));
         }
     }
 
@@ -110,10 +110,10 @@ class Observable {
      * @return {void}
      */
     notifyWildcards = (prop, from, to) => {
-        const listeners = this.listeners['*'] && Object.values(this.listeners['*']);
+        const handlers = this.listeners['*'] && Object.values(this.listeners['*']);
 
-        if (Array.isArray(listeners) && listeners.length > 0) {
-            listeners.forEach(listener => listener(prop, from, to));
+        if (Array.isArray(handlers) && handlers.length > 0) {
+            handlers.forEach(handler => handler(prop, from, to));
         }
     }
 }

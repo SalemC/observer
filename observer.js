@@ -40,12 +40,12 @@ class Observer {
      *
      * @param {Number} index The index your object is stored at.
      * @param {String} prop The property you want to listen to.
-     * @param {Function} listener The listener called every time [prop] changes.
+     * @param {Function} handler The handler called every time [prop] changes.
      *
      * @return {String} The ID of the listener added.
      */
-    addListener = (index, prop, listener = (prop, from, to) => null) => {
-        return this.observees[index].addListener(prop, listener);
+    addListener = (index, prop, handler = (prop, from, to) => null) => {
+        return this.observees[index].addListener(prop, handler);
     }
 }
 
