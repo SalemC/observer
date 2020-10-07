@@ -1,2 +1,3 @@
-# observer
-Observe JavaScript Objects.
+# Observer
+
+Observe changes to JavaScript Objects.

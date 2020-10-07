@@ -4,27 +4,27 @@ class Observer {
     /**
      * Objects we're observing.
      *
-     * @var {Object}
+     * @var {any}
      */
     observees = {};
 
     /**
      * The amount of objects we've observed.
      *
-     * @var {Number}
+     * @var {number}
      */
     index = 0;
 
     /**
      * Observe an object.
      *
-     * @param {Object} object The object to observe.
-     * @param {Boolean} raw Return raw information about the observee.
+     * @param {any} obj The object to observe.
+     * @param {boolean} raw Return raw information about the observee.
      *
      * @return {Observable|Proxy}
      */
-    observe = (object, raw = false) => {
-        this.observees[this.index] = new Observable(object, this.index);
+    observe = (obj, raw = false) => {
+        this.observees[this.index] = new Observable(obj, this.index);
 
         const previousIndex = this.index;
 
@@ -33,20 +33,19 @@ class Observer {
         return raw
             ? this.observees[previousIndex]
             : this.observees[previousIndex].proxy;
-    }
+    };
 
     /**
      * Add a listener to an object.
      *
-     * @param {Number} index The index your object is stored at.
-     * @param {String} prop The property you want to listen to.
-     * @param {Function} handler The handler called every time [prop] changes.
+     * @param {number} index The index your object is stored at.
+     * @param {string} prop The property you want to listen to.
+     * @param {Function} handler The handler called every time `prop` changes.
      *
-     * @return {String} The ID of the listener added.
+     * @return {string} The ID of the listener added.
      */
-    addListener = (index, prop, handler = (prop, from, to) => null) => {
-        return this.observees[index].addListener(prop, handler);
-    }
+    addListener = (index, prop, handler = (prop, from, to) => null) =>
+        this.observees[index].addListener(prop, handler);
 }
 
 export default Observer;
