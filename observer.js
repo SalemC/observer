@@ -2,14 +2,14 @@ import Observable from './observable';
 
 class Observer {
     /**
-     * Objects we're observing.
+     * Objects being observed.
      *
      * @var {any}
      */
     observees = {};
 
     /**
-     * The amount of objects we've observed.
+     * The amount of objects observed.
      *
      * @var {number}
      */

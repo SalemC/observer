@@ -1,3 +1,3 @@
 # Observer
 
-Observe changes to JavaScript Objects.
+Observe changes to native JavaScript Objects.
