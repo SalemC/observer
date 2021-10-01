@@ -7,6 +7,7 @@ class Observable {
      */
     constructor(original, originalIndex) {
         this.original = original;
+
         this.proxy = new Proxy(original, this.handler);
 
         return {
@@ -20,14 +21,14 @@ class Observable {
     }
 
     /**
-     * The amount of handlers we've added.
+     * The amount of handlers added.
      *
      * @var {number}
      */
     index = 0;
 
     /**
-     * The listeners for our object.
+     * The listeners for the object.
      *
      * @var {any}
      */
@@ -63,7 +64,7 @@ class Observable {
     };
 
     /**
-     * Add a listener for our object.
+     * Add a listener for the object.
      *
      * @param {string} prop The property name.
      * @param {Function} handler The handler called every time `prop` changes.
@@ -96,12 +97,10 @@ class Observable {
      * @return {void}
      */
     notify = (prop, from, to) => {
-        const handlers =
-            this.listeners[prop] && Object.values(this.listeners[prop]);
-
-        if (Array.isArray(handlers) && handlers.length > 0) {
-            handlers.forEach((handler) => handler(prop, from, to));
-        }
+        (prop in this.listeners
+            ? Object.values(this.listeners[prop])
+            : []
+        ).forEach((handler) => handler(prop, from, to));
     };
 
     /**
@@ -114,12 +113,12 @@ class Observable {
      * @return {void}
      */
     notifyWildcards = (prop, from, to) => {
-        const handlers =
-            this.listeners['*'] && Object.values(this.listeners['*']);
+        const key = '*';
 
-        if (Array.isArray(handlers) && handlers.length > 0) {
-            handlers.forEach((handler) => handler(prop, from, to));
-        }
+        (key in this.listeners
+            ? Object.values(this.listeners[key])
+            : []
+        ).forEach((handler) => handler(prop, from, to));
     };
 }
 
